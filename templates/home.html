@@ -11,7 +11,7 @@
         <div class="page-header">
             <a href="{% url 'home' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             </div>
-        <div class="content container">
+        <div class="content containerz">
             <div class="row">
                 <div class="col-md-8">
                         <form method="post" class="home" > 
@@ -23,10 +23,9 @@
                         <input class="btn btn-success" type="submit" value="Shorten"  >
                         <br>
                         <br>
-                        <div class="result" style="background-color: aquamarine;padding: 3vh;width: 50%;border-radius: 25px">
-                                
-                        <a href="{% url 'redirect' keyCode=shortenedUrl%}">http://127.0.0.1:8000/{{ shortenedUrl }}</a>
-                        </div>
+                       <div class="result" style="background-color: aquamarine;padding: 3vh;width: 50%;border-radius: 25px">
+                        <a href="{% url 'redirect' keyCode=shortenedUrl %}"> http://127.0.0.1:8000/{{shortenedUrl}}</a>
+                       </div>           
                         
                     </form>
                     
