@@ -1,0 +1,38 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <!-- <link rel="stylesheet" href="{% static home.css%}"> -->
+    </head>
+    <body>
+        <h1>Shorten the url</h1>
+        <div class="page-header">
+            <a href="{% url 'home' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            </div>
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                        <form method="post" class="home" > 
+                        {% csrf_token %}
+                           {{ form }}
+                                           
+                        <br>
+                        <br>
+                        <input class="btn btn-success" type="submit" value="Shorten"  >
+                        <br>
+                        <br>
+                        <div class="result" style="background-color: aquamarine;padding: 3vh;width: 50%;border-radius: 25px">
+                                
+                        <a href="{% url 'redirect' keyCode=shortenedUrl%}">http://127.0.0.1:8000/{{ shortenedUrl }}</a>
+                        </div>
+                        
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+        <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+        <link rel="stylesheet" href="{% static info.css%}">
+    </head>
+    <body>
+        <h2>Details of Keycode : " {{ keycode }} " </h2>
+        
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="date"> 
+                        Created At : 
+                    </div>
+                    <div class="ip">
+                        Requested From ip address : {{ ip_address }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
