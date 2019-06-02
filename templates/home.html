@@ -4,14 +4,14 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <!-- <link rel="stylesheet" href="{% static home.css%}"> -->
+        <link rel="stylesheet" href="{% static 'css/main.css' %} " type="text/css">
     </head>
     <body>
         <h1>Shorten the url</h1>
         <div class="page-header">
             <a href="{% url 'home' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             </div>
-        <div class="content containerz">
+        <div class="container">
             <div class="row">
                 <div class="col-md-8">
                         <form method="post" class="home" > 
@@ -23,8 +23,8 @@
                         <input class="btn btn-success" type="submit" value="Shorten"  >
                         <br>
                         <br>
-                       <div class="result" style="background-color: aquamarine;padding: 3vh;width: 50%;border-radius: 25px">
-                        <a href="{% url 'redirect' keyCode=shortenedUrl %}"> http://127.0.0.1:8000/{{shortenedUrl}}</a>
+                       <div class="result" >
+                        <a href="{% url 'redirect' keyCode=shortenedUrl %}">http://127.0.0.1:8000/{{shortenedUrl}}</a>
                        </div>           
                         
                     </form>
