@@ -4,11 +4,26 @@ from django.utils.timezone import now
 
 class UrlInput(models.Model):
     url =  models.URLField(max_length=1000)
-    shortenUrl = models.CharField(max_length =1000,null =True,blank =True)
-    noOfHit = models.PositiveIntegerField(default=0)
+    shorten_url = models.CharField(max_length =1000,null =True,blank =True)
     created_at = models.DateTimeField(default= now,blank =True,null = True)
     
     def __str__(self):
-        return '%s' %(self.url)
+        return '%s' %(self.shorten_url)
+
+class Stat(models.Model):
+    url_input_details = models.ForeignKey(UrlInput,on_delete =models.CASCADE,related_name = "stats")
+    url_hit_time =  models.DateTimeField(default = now,blank =True,null =True)
+    ip_address = models.CharField(blank =True ,null = True,max_length=15)
+    country = models.CharField(blank =True ,null = True , max_length =50)
+
+ 
+    
+
+    
+    
+    
+
+
+
 
         
