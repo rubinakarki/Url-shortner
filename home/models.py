@@ -16,6 +16,9 @@ class Stat(models.Model):
     ip_address = models.CharField(blank =True ,null = True,max_length=15)
     country = models.CharField(blank =True ,null = True , max_length =50)
 
+    def __str__(self):
+        return '%s' %{self.url_input_details}
+
  
     
 

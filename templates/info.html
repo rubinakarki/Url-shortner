@@ -9,7 +9,9 @@
         <link rel="stylesheet" href="{% static 'css/info.css' %}">
     </head>
     <body>
-        <h2>Details of Keycode : " {{ keycode }} " </h2>
+        <h3>Details of Keycode : " http://127.0.0.1:8000/{{ keycode }} " </h3>
+        <h3>Keycode of "{{data.url}}"</h3>
+        <h3>Total number of hits : {{ infos.count }}</h3>
         
         <div class="container">
             <div class="row">
@@ -20,7 +22,15 @@
                           <th>IP</th>
                           <th>Country</th>
                         </tr>
-                       
+                        {% for i in infos %}
+                        <tr>
+                            <td>{{i.url_hit_time}}</td>
+                            <td>{{i.ip_address}}</td>
+                            <td>{{i.country}}</td>
+                        </tr>
+                       {% endfor %}
+
+                    <!-- <br/>{{infos.0.url_hit_time}} -->
                     </table>    
                 </div>
             </div>

@@ -31,7 +31,7 @@ def randomStringDigit(args):
 def urlRedirect(request,keyCode):
     # print(keyCode)   
     requiredUrl = UrlInput.objects.get(shorten_url = keyCode)
-
+    
     #getting visitor's ip and country 
     ip_add =  get_ip_address(request)
     g = GeoIP2()
@@ -60,7 +60,7 @@ def get_ip_address(request):
 
 def info(request,keyCode):
     data = UrlInput.objects.get(shorten_url = keyCode)
-    args = {'keycode':keyCode,'data': data}
+    infos = data.stats.order_by('url_hit_time')
+    args = {'keycode':keyCode,'infos': infos,'data' : data}
     return render(request,'info.html',args)
 
-    
