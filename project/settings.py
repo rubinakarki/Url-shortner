@@ -125,3 +125,5 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR,'assets')
+
+GEOIP_PATH =os.path.join(BASE_DIR, 'geoip')

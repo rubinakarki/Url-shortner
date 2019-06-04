@@ -29,21 +29,33 @@ def randomStringDigit(args):
 
 
 def urlRedirect(request,keyCode):
-    # print(keyCode)
+    # print(keyCode)   
+    requiredUrl = UrlInput.objects.get(shorten_url = keyCode)
+
+    #getting visitor's ip and country 
+    ip_add =  get_ip_address(request)
+    g = GeoIP2()
+    country_value = ''
+    try:
+        country_value = (g.country_name(ip_add))
+    except: 
+        print("Oops!  That was not available in database.Try again...")
+        country_value = 'Not Available'
     
+    
+    row_created = Stat(url_input_details =requiredUrl,ip_address = ip_add,country = country_value)   # object created for stat model 
+    row_created.save()
+    return redirect(str(requiredUrl.url))
+
+
+def get_ip_address(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[-1].strip()
     else:
         ip = request.META.get('REMOTE_ADDR') 
-
+    return ip
     
-    
-    requiredUrl = UrlInput.objects.get(shorten_url = keyCode)
-    row_created = Stat(url_input_details =requiredUrl,ip_address = ip)   # object created for stat model 
-    # requiredUrl.noOfHit += 1
-    row_created.save()
-    return redirect(str(requiredUrl.url))
 
 
 def info(request,keyCode):
