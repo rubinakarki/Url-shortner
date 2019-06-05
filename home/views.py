@@ -66,7 +66,7 @@ def info(request,keyCode):
     
     last_7_days = datetime.today() - timedelta(days = 7)
     data_for_bar_graph =  infos.filter(url_hit_time__gte = last_7_days).extra(select = {'day': 'date(url_hit_time)'}).values('day').annotate(hits =Count('id')).order_by('day')
-    import ipdb; ipdb.set_trace()
+
     # dictionary_comprehensions 
     # data_for_bar_graph_2 = {i['day']:i['hits'] for i in data_for_bar_graph}
     # pprint(data_for_bar_graph_2)
