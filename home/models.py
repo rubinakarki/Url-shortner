@@ -11,10 +11,11 @@ class UrlInput(models.Model):
         return '%s' %(self.shorten_url)
 
 class Stat(models.Model):
-    url_input_details = models.ForeignKey(UrlInput,on_delete =models.CASCADE,related_name = "stats")
+    url_input_details = models.ForeignKey(UrlInput,on_delete =models.CASCADE,related_name = "stats",related_query_name ="key")
     url_hit_time =  models.DateTimeField(default = now,blank =True,null =True)
     ip_address = models.CharField(blank =True ,null = True,max_length=15)
     country = models.CharField(blank =True ,null = True , max_length =50)
+    
 
     def __str__(self):
         return '%s' %{self.url_input_details}

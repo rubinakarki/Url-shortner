@@ -3,8 +3,12 @@ from .models import UrlInput,Stat
 from .forms import UrlInputForm
 import random
 import string
-from datetime import datetime
+import json
+from pprint import pprint
+from datetime import datetime,timedelta
 from django.contrib.gis.geoip2 import GeoIP2
+from django.db.models import Count
+from django.utils.safestring import mark_safe
 
 
 # Create your views here.
@@ -24,12 +28,10 @@ def showHome(request):
 def randomStringDigit(args):
     lettersAndDigits = string.ascii_lowercase +string.digits + string.ascii_uppercase
     key =  ''.join(random.choice(lettersAndDigits) for i in range(args))
-    # print(key)
     return key
 
 
 def urlRedirect(request,keyCode):
-    # print(keyCode)   
     requiredUrl = UrlInput.objects.get(shorten_url = keyCode)
     
     #getting visitor's ip and country 
@@ -60,7 +62,29 @@ def get_ip_address(request):
 
 def info(request,keyCode):
     data = UrlInput.objects.get(shorten_url = keyCode)
-    infos = data.stats.order_by('url_hit_time')
-    args = {'keycode':keyCode,'infos': infos,'data' : data}
+    infos = data.stats.all()
+    
+    last_7_days = datetime.today() - timedelta(days = 7)
+    data_for_bar_graph =  infos.filter(url_hit_time__gte = last_7_days).extra(select = {'day': 'date(url_hit_time)'}).values('day').annotate(hits =Count('id')).order_by('day')
+    import ipdb; ipdb.set_trace()
+    # dictionary_comprehensions 
+    # data_for_bar_graph_2 = {i['day']:i['hits'] for i in data_for_bar_graph}
+    # pprint(data_for_bar_graph_2)
+
+    values = []
+    
+    for i in data_for_bar_graph: 
+        for value in i.values(): 
+            values.append(value)
+    
+
+    date = []
+    hits_no = []
+    for i in range(0,len(values),2):
+        date.append(values[i])
+        hits_no.append(values[i+1])
+    
+    print(date)
+    args = {'keycode':keyCode,'infos': infos,'data' : data,'date' : mark_safe(date),'hits_no' :hits_no}
     return render(request,'info.html',args)
 
