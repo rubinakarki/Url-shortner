@@ -9,7 +9,7 @@ from datetime import datetime,timedelta
 from django.contrib.gis.geoip2 import GeoIP2
 from django.db.models import Count
 from django.utils.safestring import mark_safe
-
+import collections
 
 # Create your views here.
 def showHome(request):
@@ -65,26 +65,30 @@ def info(request,keyCode):
     infos = data.stats.all()
     
     last_7_days = datetime.today() - timedelta(days = 7)
-    data_for_bar_graph =  infos.filter(url_hit_time__gte = last_7_days).extra(select = {'day': 'date(url_hit_time)'}).values('day').annotate(hits =Count('id')).order_by('day')
-
-    # dictionary_comprehensions 
-    # data_for_bar_graph_2 = {i['day']:i['hits'] for i in data_for_bar_graph}
-    # pprint(data_for_bar_graph_2)
-
-    values = []
+    data_for_bar_graph =  infos.filter(url_hit_time__gte = last_7_days).extra(select = {'day':'date(url_hit_time)'}).values('day').annotate(hits =Count('id')).order_by('day') 
+  
+     # dictionary_comprehensions 
+    date_hits = {i['day']:i['hits'] for i in data_for_bar_graph}
     
-    for i in data_for_bar_graph: 
-        for value in i.values(): 
-            values.append(value)
-    
+    #date to compare
+    required_date =[]
+    for i in range(0,7):
+        required_date.append((datetime.today().date()-timedelta(days =i)).strftime('%Y-%m-%d'))
 
-    date = []
-    hits_no = []
-    for i in range(0,len(values),2):
-        date.append(values[i])
-        hits_no.append(values[i+1])
-    
-    print(date)
+    #inserting value 0 in dates which does not exist in the records
+    for i in required_date:
+        if i in date_hits.keys():
+            pass 
+        else: 
+           date_hits[i] = 0 
+    sorted_date_hits  = collections.OrderedDict(sorted(date_hits.items()))
+ 
+    #extracting date and hits for graph
+    date =[]
+    hits_no =[]
+    for key,value in sorted_date_hits.items():
+        date.append(key)
+        hits_no.append(value) 
+
     args = {'keycode':keyCode,'infos': infos,'data' : data,'date' : mark_safe(date),'hits_no' :hits_no}
-    return render(request,'info.html',args)
-
+    return render(request,'info.html',args) 
