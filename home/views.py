@@ -106,7 +106,6 @@ def api_request(request):
         data = {
             "long url" : urlpost,
             "short url": shorten_url_post 
-
         }
         new_row = UrlInput(url = urlpost,shorten_url = shorten_code)
         new_row.save()
