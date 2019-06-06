@@ -10,6 +10,8 @@ from django.contrib.gis.geoip2 import GeoIP2
 from django.db.models import Count
 from django.utils.safestring import mark_safe
 import collections
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 # Create your views here.
 def showHome(request):
@@ -92,3 +94,21 @@ def info(request,keyCode):
 
     args = {'keycode':keyCode,'infos': infos,'data' : data,'date' : mark_safe(date),'hits_no' :hits_no}
     return render(request,'info.html',args) 
+
+@csrf_exempt
+def api_request(request):
+    if(request.method == 'POST'):
+
+        urlpost = request.POST['url'] 
+        shorten_code =randomStringDigit(8)
+        shorten_url_post = "http://127.0.0.1:8000/"+ shorten_code
+
+        data = {
+            "long url" : urlpost,
+            "short url": shorten_url_post 
+
+        }
+        new_row = UrlInput(url = urlpost,shorten_url = shorten_code)
+        new_row.save()
+        return JsonResponse(data)
+    

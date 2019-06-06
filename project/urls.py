@@ -15,8 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include,path
+from rest_framework import routers
+from api.views import api_shorten
+from home.views import api_request
+
+router = routers.DefaultRouter()
+router.register(r'shortenurl',api_shorten)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('home.urls'))
+    path('',include('home.urls')),
+    path('api/',include(router.urls)),
+    path('api/shortenurl_post/' ,api_request,name ="api")
 ]

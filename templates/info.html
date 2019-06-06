@@ -8,8 +8,8 @@
         <script src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     </head>
     <body>
-        <h3>Details of Keycode : " http://127.0.0.1:8000/{{ keycode }} " </h3>
-        <h3>Keycode of "{{data.url}}"</h3>
+        <h3>Details of Keycode :<a href="{% url 'redirect' keyCode=keycode %}" target="_blank">" http://127.0.0.1:8000/{{ keycode }} " </a></h3>
+        <h3>Keycode of <a href="{{data.url}}" target="_blank">"{{data.url}}"</a></h3>
         <h3>Total number of hits : {{ infos.count }}</h3>
         
         <div class="container">
@@ -31,7 +31,7 @@
 
                     <!-- <br/>{{infos.0.url_hit_time}} -->
                     </table>   
-                    <canvas id="myChart" width="400" height="400"></canvas>
+                    <canvas id="myChart" width="400" height="200"></canvas>
                     <script>
                     
                     var ctx = document.getElementById('myChart').getContext('2d');
