@@ -12,6 +12,9 @@ from django.utils.safestring import mark_safe
 import collections
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.conf import settings
+# import ipdb; ipdb.set_trace()
+host = settings.HOST[0]
 
 # Create your views here.
 def showHome(request):
@@ -21,10 +24,10 @@ def showHome(request):
             post = form.save(commit = False) 
             post.shorten_url = randomStringDigit(8) 
             post.save()
-        return render(request,'home.html',{'form' : form,'shortenedUrl' : post.shorten_url}) 
+        return render(request,'home.html',{'form' : form,'shortenedUrl' : post.shorten_url,'host':host}) 
 
     form = UrlInputForm() 
-    return render(request,'home.html',{'form' : form}) 
+    return render(request,'home.html',{'form' : form,'host':host}) 
 
 
 def randomStringDigit(args):
@@ -59,8 +62,6 @@ def get_ip_address(request):
     else:
         ip = request.META.get('REMOTE_ADDR') 
     return ip
-    
-
 
 def info(request,keyCode):
     data = UrlInput.objects.get(shorten_url = keyCode)
@@ -92,7 +93,7 @@ def info(request,keyCode):
         date.append(key)
         hits_no.append(value) 
 
-    args = {'keycode':keyCode,'infos': infos,'data' : data,'date' : mark_safe(date),'hits_no' :hits_no}
+    args = {'keycode':keyCode,'infos': infos,'data' : data,'date' : mark_safe(date),'hits_no' :hits_no,'host':host}
     return render(request,'info.html',args) 
 
 @csrf_exempt

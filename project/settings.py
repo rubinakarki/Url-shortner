@@ -25,7 +25,7 @@ SECRET_KEY = 'g&aj7+f9%qb(%=le&1xt42gj0b788)4*18qh+g17*%t#s#a2ej'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.225','127.0.0.1']
 
 
 # Application definition
@@ -135,3 +135,11 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR,'assets')
 
 GEOIP_PATH =os.path.join(BASE_DIR, 'geoip')
+
+CORS_ORIGIN_WHITELIST = [
+    '192.168.1.225',
+    '127.0.0.1',                                                                                                       
+]    
+
+HOST = ['http://127.0.0.1:8000/']
+
